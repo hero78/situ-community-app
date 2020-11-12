@@ -46,7 +46,9 @@
                             http.defaults.headers.common.Authorization = "Basic " + key;
                         }
                     };
-
+                    this.setHeaders = function (key) {
+                        http.defaults.headers.common['Fineract-Platform-TenantId'] = key;
+                    };
                     this.cancelAuthorization = function () {
                         delete http.defaults.headers.common.Authorization;
                         delete http.defaults.headers.common['Fineract-Platform-TFA-Token'];

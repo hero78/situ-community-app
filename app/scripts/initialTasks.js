@@ -2,7 +2,8 @@
 (function (mifosX) {
     var defineHeaders = function ($httpProvider, $translateProvider, ResourceFactoryProvider, HttpServiceProvider, $idleProvider, $keepaliveProvider, IDLE_DURATION, WARN_DURATION, KEEPALIVE_INTERVAL) {
         var mainLink = getLocation(window.location.href);
-        var baseApiUrl = "https://demo.mifos.io";
+        // var baseApiUrl = "https://demo.mifos.io";
+        var baseApiUrl ='https://159.65.214.23:8443';
         var host = "";
         var portNumber = "";
         //accessing from openmf server
@@ -12,7 +13,7 @@
             domains = hostname.split('.');
             console.log('domains---' + domains);
             // For multi tenant hosting
-            if (domains[0] == "demo") {
+            if (domains[0] === "demo") {
                 $httpProvider.defaults.headers.common['Fineract-Platform-TenantId'] = 'default';
                 ResourceFactoryProvider.setTenantIdenetifier('default');
                 console.log("demo server", domains[0]);
@@ -26,18 +27,9 @@
         }
         //accessing from a file system or other servers
         else {
-            if (mainLink.hostname != "") {
-                baseApiUrl = "https://" + mainLink.hostname + (mainLink.port ? ':' + mainLink.port : '');
-            }
 
-            if (QueryParameters["baseApiUrl"]) {
-                baseApiUrl = QueryParameters["baseApiUrl"];
-            }
-            var queryLink = getLocation(baseApiUrl);
-            host = "https://" + queryLink.hostname + (queryLink.port ? ':' + queryLink.port : '');
-            portNumber = queryLink.port;
-
-            $httpProvider.defaults.headers.common['Fineract-Platform-TenantId'] = 'default';
+            host = baseApiUrl;
+            $httpProvider.defaults.headers.common['Fineract-Platform-TenantId'] = '';
             ResourceFactoryProvider.setTenantIdenetifier('default');
             if (QueryParameters["tenantIdentifier"]) {
                 $httpProvider.defaults.headers.common['Fineract-Platform-TenantId'] = QueryParameters["tenantIdentifier"];

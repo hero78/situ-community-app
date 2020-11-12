@@ -70,6 +70,7 @@
                     .then(getUserDetails)
                     .catch(onLoginFailure);
         		} else {
+                    httpService.setHeaders(credentials.tenantId);
                     httpService.post(apiVer + "/authentication", { "username": credentials.username, "password": credentials.password})
                     .then(onLoginSuccess)
                     .catch(onLoginFailure);
